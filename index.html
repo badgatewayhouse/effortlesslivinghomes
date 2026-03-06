@@ -3,18 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ELH — Design Concepts</title>
+  <title>ELH — Design Review</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --black: #141414;
       --white: #FFFFFF;
-      --cream: #F7F5F1;
-      --brass: #A8895A;
       --brass-lt: #C4A472;
-      --mid: #6B6560;
       --font-disp: 'Playfair Display', Georgia, serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -31,36 +28,40 @@
       padding: 60px 24px;
     }
 
-    .label {
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--brass-lt);
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 28px;
+    header {
+      margin-bottom: 48px;
+      text-align: center;
     }
-    .label::before, .label::after {
-      content: ''; display: block; width: 40px; height: 1px; background: currentColor; opacity: 0.5;
-    }
-
-    h1 {
+    .logo {
       font-family: var(--font-disp);
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800; line-height: 1.05;
-      text-align: center; margin-bottom: 12px;
+      font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
     }
-    h1 em { font-style: italic; font-weight: 400; color: rgba(255,255,255,0.55); }
+    .org {
+      font-size: 0.65rem; font-weight: 300;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
 
-    .subtitle {
-      font-size: 0.9rem; font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.04em; text-align: center;
-      margin-bottom: 72px;
+    .divider {
+      width: 40px; height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 auto 48px;
+    }
+
+    .prompt {
+      font-size: 0.75rem; font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.38);
+      text-align: center;
+      margin-bottom: 28px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2px; width: 100%; max-width: 900px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px; width: 100%; max-width: 800px;
     }
 
     .card {
@@ -69,99 +70,78 @@
       overflow: hidden;
       transition: transform 0.4s var(--ease);
     }
-    .card:hover { transform: translateY(-6px); }
+    .card:hover { transform: translateY(-4px); }
 
     .card-thumb {
-      aspect-ratio: 16/9; overflow: hidden; position: relative;
+      aspect-ratio: 16/9; overflow: hidden;
     }
     .card-thumb img {
       width: 100%; height: 100%; object-fit: cover;
       transition: transform 0.7s var(--ease);
+      filter: brightness(0.82);
     }
-    .card:hover .card-thumb img { transform: scale(1.05); }
-    .card-thumb-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
-    }
+    .card:hover .card-thumb img { transform: scale(1.04); filter: brightness(0.92); }
 
-    .card-body { padding: 28px 32px 36px; }
-    .card-num {
+    .card-body { padding: 24px 28px 30px; }
+    .card-dir {
       font-size: 0.62rem; font-weight: 400;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--brass-lt); margin-bottom: 10px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--brass-lt); margin-bottom: 6px;
     }
     .card-title {
       font-family: var(--font-disp);
-      font-size: 1.5rem; font-weight: 700;
-      color: var(--white); margin-bottom: 10px;
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--white); margin-bottom: 8px;
     }
     .card-desc {
-      font-size: 0.82rem; font-weight: 300;
-      color: rgba(255,255,255,0.4); line-height: 1.75;
-      margin-bottom: 24px;
+      font-size: 0.8rem; font-weight: 300;
+      color: rgba(255,255,255,0.38); line-height: 1.7;
     }
-    .card-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.7rem; font-weight: 500;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--white);
-      border-bottom: 1px solid rgba(255,255,255,0.25);
-      padding-bottom: 3px;
-      transition: color 0.25s, border-color 0.25s;
-    }
-    .card:hover .card-cta { color: var(--brass-lt); border-color: var(--brass-lt); }
-    .card-cta svg { transition: transform 0.25s; }
-    .card:hover .card-cta svg { transform: translateX(4px); }
 
     footer {
-      margin-top: 64px;
-      font-size: 0.68rem; font-weight: 300;
-      color: rgba(255,255,255,0.2);
+      margin-top: 52px;
+      font-size: 0.62rem; font-weight: 300;
+      color: rgba(255,255,255,0.15);
       letter-spacing: 0.1em; text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <div class="label">Effortless Living Homes</div>
-  <h1>Two concepts.<br /><em>One vision.</em></h1>
-  <p class="subtitle">Select a design direction to explore.</p>
+  <header>
+    <div class="logo">Effortless Living Homes</div>
+    <div class="org">Access Green Design Group</div>
+  </header>
+
+  <div class="divider"></div>
+
+  <p class="prompt">Select a design direction to review.</p>
 
   <div class="cards">
     <a class="card" href="mockup.html">
       <div class="card-thumb">
-        <img src="assets/banner_small.jpeg" alt="Concept 1 — front elevation" />
-        <div class="card-thumb-overlay"></div>
+        <img src="assets/banner_small.jpeg" alt="Direction A" />
       </div>
       <div class="card-body">
-        <div class="card-num">Concept 01</div>
+        <div class="card-dir">Direction A</div>
         <div class="card-title">Light &amp; Structured</div>
-        <p class="card-desc">Cream tones, brass accents, and a structured layout that balances warmth with clarity.</p>
-        <span class="card-cta">
-          View concept
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <p class="card-desc">Cream tones with brass accents on a warm off-white base.</p>
       </div>
     </a>
 
     <a class="card" href="mockup2.html">
       <div class="card-thumb">
-        <img src="assets/banner_rear_small.jpg" alt="Concept 2 — rear elevation" />
-        <div class="card-thumb-overlay"></div>
+        <img src="assets/banner_rear_small.jpg" alt="Direction B" />
       </div>
       <div class="card-body">
-        <div class="card-num">Concept 02</div>
+        <div class="card-dir">Direction B</div>
         <div class="card-title">Dark &amp; Cinematic</div>
-        <p class="card-desc">Full-viewport panels and a dark palette that lets the architecture speak for itself.</p>
-        <span class="card-cta">
-          View concept
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <p class="card-desc">Full-viewport panels on a dark background, letting the architecture lead.</p>
       </div>
     </a>
   </div>
 
-  <footer>Access Green Design Group &nbsp;·&nbsp; Design Mockup — Not for distribution</footer>
+  <footer>Design review — confidential</footer>
 
 </body>
 </html>
