@@ -37,12 +37,12 @@
     }
     .nav-logo {
       font-family: var(--font-disp);
-      font-size: 1rem; font-weight: 500;
+      font-size: 2.5rem; font-weight: 500;
       color: var(--white); letter-spacing: 0.03em;
       display: flex; flex-direction: column; line-height: 1.2;
     }
     .nav-logo small {
-      font-family: var(--font-body); font-size: 0.55rem; font-weight: 300;
+      font-family: var(--font-body); font-size: 1.375rem; font-weight: 300;
       letter-spacing: 0.24em; text-transform: uppercase;
       color: rgba(255,255,255,0.5);
     }
@@ -87,38 +87,15 @@
     /* ── TEXT OVERLAYS ── */
     .panel-content {
       position: relative; z-index: 2;
-      width: 100%; display: flex;
+      width: 100%; height: 100%; display: flex;
     }
 
     /* HERO */
     .panel--hero .panel-content {
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 120px 60px 72px;
     }
-    .hero-headline {
-      max-width: 14ch;
-    }
-    .hero-kicker {
-      font-family: var(--font-body);
-      font-size: 0.68rem; font-weight: 400;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--brass-lt); margin-bottom: 22px;
-      display: flex; align-items: center; gap: 14px;
-    }
-    .hero-kicker::before { content: ''; display: block; width: 32px; height: 1px; background: currentColor; }
-    .hero-headline h1 {
-      font-family: var(--font-disp);
-      font-size: clamp(3.8rem, 7vw, 7.5rem);
-      font-weight: 800; line-height: 0.97;
-      color: var(--white); letter-spacing: -0.02em;
-    }
-    .hero-headline h1 em {
-      font-style: italic; font-weight: 400;
-      color: rgba(255,255,255,0.72);
-      display: block;
-    }
-
     .hero-bottom {
       display: flex; justify-content: flex-end; align-items: flex-end;
     }
@@ -303,13 +280,6 @@
     <div class="panel-overlay"></div>
     <div class="panel-content">
 
-      <div class="hero-headline">
-        <div class="hero-kicker">Effortless Living Homes</div>
-        <h1>
-          Built<br/>for<br/><em>today's families.</em>
-        </h1>
-      </div>
-
       <div class="hero-bottom">
         <div class="hero-scroll-cta">
           <p>Modular, sustainable homes — designed for the way people actually live.</p>
@@ -386,10 +356,7 @@
     <img class="panel-img" src="assets/banner_rear_small.jpg" alt="Effortless Living Homes rear elevation" />
     <div class="panel-overlay"></div>
     <div class="panel-content">
-      <blockquote class="rear-quote fade">
-        A home that <em>grows</em><br/>with your family.
-      </blockquote>
-    </div>
+</div>
   </section>
 
   <script>
