@@ -3,145 +3,404 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ELH — Design Review</title>
+  <title>Effortless Living Homes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black: #141414;
-      --white: #FFFFFF;
-      --brass-lt: #C4A472;
+      --black:     #141414;
+      --white:     #FFFFFF;
+      --cream:     #F7F5F1;
+      --brass:     #A8895A;
+      --brass-lt:  #C4A472;
+      --sage:      #7A8C6E;
+      --mid:       rgba(255,255,255,0.55);
+
       --font-disp: 'Playfair Display', Georgia, serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease:      cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font-body);
-      background: var(--black);
-      color: var(--white);
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 60px 24px;
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+    img { display: block; width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV — minimal, always transparent ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 52px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: var(--font-disp);
+      font-size: 1rem; font-weight: 500;
+      color: var(--white); letter-spacing: 0.03em;
+      display: flex; flex-direction: column; line-height: 1.2;
+    }
+    .nav-logo small {
+      font-family: var(--font-body); font-size: 0.55rem; font-weight: 300;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
     }
 
-    header {
-      margin-bottom: 48px;
-      text-align: center;
+    /* ── PANEL — full-viewport image section ── */
+    .panel {
+      position: relative;
+      height: 100vh; min-height: 600px;
+      overflow: hidden;
+      display: flex;
     }
-    .logo {
+    .panel-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.88) contrast(1.06);
+      transition: transform 8s ease;
+      transform: scale(1.04);
+    }
+    .panel.visible .panel-img { transform: scale(1.0); }
+
+    .panel-overlay {
+      position: absolute; inset: 0;
+    }
+    .panel--hero .panel-overlay {
+      background: linear-gradient(
+        135deg,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0.1) 50%,
+        rgba(0,0,0,0.35) 100%
+      );
+    }
+    .panel--rear .panel-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.18) 55%,
+        rgba(0,0,0,0.0) 100%
+      );
+    }
+
+    /* ── TEXT OVERLAYS ── */
+    .panel-content {
+      position: relative; z-index: 2;
+      width: 100%; display: flex;
+    }
+
+    /* HERO */
+    .panel--hero .panel-content {
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 120px 60px 72px;
+    }
+    .hero-headline {
+      max-width: 14ch;
+    }
+    .hero-kicker {
+      font-family: var(--font-body);
+      font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--brass-lt); margin-bottom: 22px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-kicker::before { content: ''; display: block; width: 32px; height: 1px; background: currentColor; }
+    .hero-headline h1 {
       font-family: var(--font-disp);
-      font-size: 1.1rem; font-weight: 700;
-      letter-spacing: 0.01em;
-      margin-bottom: 6px;
+      font-size: clamp(3.8rem, 7vw, 7.5rem);
+      font-weight: 800; line-height: 0.97;
+      color: var(--white); letter-spacing: -0.02em;
     }
-    .org {
-      font-size: 0.65rem; font-weight: 300;
+    .hero-headline h1 em {
+      font-style: italic; font-weight: 400;
+      color: rgba(255,255,255,0.72);
+      display: block;
+    }
+
+    .hero-bottom {
+      display: flex; justify-content: flex-end; align-items: flex-end;
+    }
+    .hero-scroll-cta {
+      text-align: right;
+    }
+    .hero-scroll-cta p {
+      font-family: var(--font-disp);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-style: italic; font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      max-width: 30ch; text-align: right; line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .scroll-indicator {
+      display: flex; align-items: center; gap: 12px; justify-content: flex-end;
+      font-size: 0.65rem; font-weight: 400;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: rgba(255,255,255,0.35);
     }
+    .scroll-line {
+      width: 48px; height: 1px; background: rgba(255,255,255,0.25);
+      position: relative; overflow: hidden;
+    }
+    .scroll-line::after {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%; background: var(--brass-lt);
+      animation: scan 2.2s ease-in-out infinite;
+    }
+    @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
 
-    .divider {
-      width: 40px; height: 1px;
-      background: rgba(255,255,255,0.12);
-      margin: 0 auto 48px;
+    /* ── INTERSTITIAL ── */
+    .interstitial {
+      background: var(--cream);
+      padding: 100px 60px;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .prompt {
-      font-size: 0.75rem; font-weight: 300;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.38);
-      text-align: center;
-      margin-bottom: 28px;
+    .interstitial-inner {
+      max-width: 860px; text-align: center;
     }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2px; width: 100%; max-width: 800px;
+    .int-label {
+      font-family: var(--font-body);
+      font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
     }
-
-    .card {
-      display: block; text-decoration: none;
-      background: #1A1A1A;
-      overflow: hidden;
-      transition: transform 0.4s var(--ease);
+    .int-label::before, .int-label::after {
+      content: ''; display: block; flex: 1; max-width: 60px; height: 1px;
+      background: var(--sage); opacity: 0.5;
     }
-    .card:hover { transform: translateY(-4px); }
-
-    .card-thumb {
-      aspect-ratio: 16/9; overflow: hidden;
-    }
-    .card-thumb img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.7s var(--ease);
-      filter: brightness(0.82);
-    }
-    .card:hover .card-thumb img { transform: scale(1.04); filter: brightness(0.92); }
-
-    .card-body { padding: 24px 28px 30px; }
-    .card-dir {
-      font-size: 0.62rem; font-weight: 400;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--brass-lt); margin-bottom: 6px;
-    }
-    .card-title {
+    .int-quote {
       font-family: var(--font-disp);
-      font-size: 1.25rem; font-weight: 700;
-      color: var(--white); margin-bottom: 8px;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 400; font-style: italic;
+      color: var(--black); line-height: 1.3;
+      margin-bottom: 24px;
     }
-    .card-desc {
-      font-size: 0.8rem; font-weight: 300;
-      color: rgba(255,255,255,0.38); line-height: 1.7;
+    .int-quote strong {
+      font-weight: 800; font-style: normal;
+      color: var(--black);
+    }
+    .int-source {
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 300;
+      letter-spacing: 0.08em;
+      color: #8A8070;
     }
 
-    footer {
-      margin-top: 52px;
-      font-size: 0.62rem; font-weight: 300;
-      color: rgba(255,255,255,0.15);
-      letter-spacing: 0.1em; text-align: center;
+    /* ── REAR PANEL ── */
+    .panel--rear .panel-content {
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      padding: 60px 60px 80px;
     }
+    .rear-quote {
+      font-family: var(--font-disp);
+      font-size: clamp(2rem, 4.5vw, 4.2rem);
+      font-weight: 700; font-style: italic;
+      color: var(--white); line-height: 1.15;
+      max-width: 22ch; margin-bottom: 44px;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+    }
+    .rear-quote em { font-style: normal; color: var(--brass-lt); }
+
+    /* ── INTERIOR PANEL ── */
+    .panel--interior .panel-overlay {
+      background: linear-gradient(
+        to left,
+        rgba(0,0,0,0.68) 0%,
+        rgba(0,0,0,0.22) 45%,
+        rgba(0,0,0,0.0) 100%
+      );
+    }
+    .panel--interior .panel-content {
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 120px 72px;
+      text-align: right;
+    }
+    .interior-caption { max-width: 36ch; }
+    .interior-label {
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--brass-lt); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px; justify-content: flex-end;
+    }
+    .interior-label::after { content: ''; display: block; width: 28px; height: 1px; background: currentColor; }
+    .interior-caption h2 {
+      font-family: var(--font-disp);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700; font-style: italic;
+      color: var(--white); line-height: 1.1; margin-bottom: 20px;
+    }
+    .interior-caption h2 em { font-style: normal; color: var(--brass-lt); }
+    .interior-caption p {
+      font-size: 0.9rem; font-weight: 300;
+      color: rgba(255,255,255,0.58); line-height: 1.8;
+    }
+
+    /* ── HALLWAY PANEL ── */
+    .panel--hallway .panel-overlay {
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.18) 50%,
+        rgba(0,0,0,0.0) 100%
+      );
+    }
+    .panel--hallway .panel-content {
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 72px;
+    }
+    .hallway-caption { max-width: 34ch; }
+    .hallway-label {
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--brass-lt); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hallway-label::before { content: ''; display: block; width: 28px; height: 1px; background: currentColor; }
+    .hallway-caption h2 {
+      font-family: var(--font-disp);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700; font-style: italic;
+      color: var(--white); line-height: 1.1; margin-bottom: 20px;
+    }
+    .hallway-caption h2 em { font-style: normal; color: var(--brass-lt); }
+    .hallway-caption p {
+      font-size: 0.9rem; font-weight: 300;
+      color: rgba(255,255,255,0.58); line-height: 1.8;
+    }
+
+    /* ── FADE-UP REVEAL ── */
+    .fade {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .fade.visible { opacity: 1; transform: none; }
+    .fade.d1 { transition-delay: 0.15s; }
+    .fade.d2 { transition-delay: 0.3s; }
+    .fade.d3 { transition-delay: 0.45s; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Effortless Living Homes</div>
-    <div class="org">Access Green Design Group</div>
-  </header>
-
-  <div class="divider"></div>
-
-  <p class="prompt">Select a design direction to review.</p>
-
-  <div class="cards">
-    <a class="card" href="mockup.html">
-      <div class="card-thumb">
-        <img src="assets/banner_small.jpeg" alt="Direction A" />
-      </div>
-      <div class="card-body">
-        <div class="card-dir">Direction A</div>
-        <div class="card-title">Light &amp; Structured</div>
-        <p class="card-desc">Scrolling sections with split layouts, numbered content blocks, and an inline stats panel.</p>
-      </div>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      Effortless Living Homes
+      <small>Access Green Design Group</small>
     </a>
+  </nav>
 
-    <a class="card" href="mockup2.html">
-      <div class="card-thumb">
-        <img src="assets/banner_rear_small.jpg" alt="Direction B" />
+  <!-- PANEL 1 — HERO -->
+  <section class="panel panel--hero">
+    <img class="panel-img" src="assets/banner_small.jpeg" alt="Effortless Living Homes front elevation" />
+    <div class="panel-overlay"></div>
+    <div class="panel-content">
+
+      <div class="hero-headline">
+        <div class="hero-kicker">Effortless Living Homes</div>
+        <h1>
+          Built<br/>for<br/><em>today's families.</em>
+        </h1>
       </div>
-      <div class="card-body">
-        <div class="card-dir">Direction B</div>
-        <div class="card-title">Dark &amp; Cinematic</div>
-        <p class="card-desc">Image-first panels separated by focused text breaks and a data strip.</p>
+
+      <div class="hero-bottom">
+        <div class="hero-scroll-cta">
+          <p>Modular, sustainable homes — designed for the way people actually live.</p>
+          <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            Scroll
+          </div>
+        </div>
       </div>
-    </a>
+
+    </div>
+  </section>
+
+  <!-- INTERSTITIAL 1 — The problem -->
+  <div class="interstitial">
+    <div class="interstitial-inner">
+      <div class="int-label fade">The Housing Crisis</div>
+      <blockquote class="int-quote fade d1">
+        "Traditional homebuilding hasn't changed in <strong>200 years.</strong><br />
+        It's time for a modern solution."
+      </blockquote>
+      <p class="int-source fade d2">Rampant material waste. Labor shortages. Unpredictable costs. There is a better way.</p>
+    </div>
   </div>
 
-  <footer>Design review — confidential</footer>
+  <!-- INTERSTITIAL 2 — The solution -->
+  <div class="interstitial">
+    <div class="interstitial-inner">
+      <div class="int-label fade">Our Solution</div>
+      <blockquote class="int-quote fade d1">
+        "Precision-engineered in a controlled environment.<br/>
+        Assembled on-site in <strong>weeks, not months.</strong>"
+      </blockquote>
+      <p class="int-source fade d2">BIM-driven design · CNC fabrication · SIP panel enclosure · Helical pier foundations</p>
+    </div>
+  </div>
 
+  <!-- PANEL 2 — INTERIOR LIVING ROOM -->
+  <section class="panel panel--interior">
+    <img class="panel-img" src="assets/render_interior_living.png" alt="Open-plan living room and kitchen — exposed wood trusses" />
+    <div class="panel-overlay"></div>
+    <div class="panel-content">
+      <div class="interior-caption fade">
+        <div class="interior-label">Inside the Home</div>
+        <h2>Vaulted ceilings.<br/><em>Warm materials.</em></h2>
+        <p>
+          Open-plan living flows into the kitchen beneath exposed
+          engineered trusses — every surface chosen for warmth,
+          durability, and the way families actually use space.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 3 — HALLWAY / ENTRY DETAIL -->
+  <section class="panel panel--hallway">
+    <img class="panel-img" src="assets/render_front_chair.png" alt="Interior hallway — vaulted entry with natural wood beams" />
+    <div class="panel-overlay"></div>
+    <div class="panel-content">
+      <div class="hallway-caption fade">
+        <div class="hallway-label">Crafted Details</div>
+        <h2>Light-filled<br/><em>corridors.</em></h2>
+        <p>
+          Soaring vaulted entries and natural hardwood floors run
+          the full length of the home — precision-crafted in the
+          factory, assembled on site in days.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 4 — REAR ELEVATION -->
+  <section class="panel panel--rear">
+    <img class="panel-img" src="assets/banner_rear_small.jpg" alt="Effortless Living Homes rear elevation" />
+    <div class="panel-overlay"></div>
+    <div class="panel-content">
+      <blockquote class="rear-quote fade">
+        A home that <em>grows</em><br/>with your family.
+      </blockquote>
+    </div>
+  </section>
+
+  <script>
+    // Ken Burns + fade-up on scroll
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade, .panel').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
