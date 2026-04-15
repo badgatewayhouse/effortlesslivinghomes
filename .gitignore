@@ -4,3 +4,10 @@ assets/presentation.pdf
 assets/manifesto.pdf
 assets/investor_pitch_slides.pptx
 assets/investor_pitch.pdf
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
