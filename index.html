@@ -58,7 +58,7 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      filter: brightness(0.88) contrast(1.06);
+      filter: contrast(1.03);
       transition: transform 8s ease;
       transform: scale(1.04);
     }
@@ -70,9 +70,9 @@
     .panel--hero .panel-overlay {
       background: linear-gradient(
         135deg,
-        rgba(0,0,0,0.55) 0%,
-        rgba(0,0,0,0.1) 50%,
-        rgba(0,0,0,0.35) 100%
+        rgba(0,0,0,0.38) 0%,
+        rgba(0,0,0,0.05) 50%,
+        rgba(0,0,0,0.22) 100%
       );
     }
     .panel--rear .panel-overlay {
@@ -216,7 +216,8 @@
     .interior-caption h2 em { font-style: normal; color: var(--brass-lt); }
     .interior-caption p {
       font-size: 0.9rem; font-weight: 300;
-      color: rgba(255,255,255,0.58); line-height: 1.8;
+      color: rgba(255,255,255,1); line-height: 1.8;
+      text-shadow: 0 1px 14px rgba(0,0,0,0.55);
     }
 
     /* ── HALLWAY PANEL ── */
@@ -250,7 +251,8 @@
     .hallway-caption h2 em { font-style: normal; color: var(--brass-lt); }
     .hallway-caption p {
       font-size: 0.9rem; font-weight: 300;
-      color: rgba(255,255,255,0.58); line-height: 1.8;
+      color: rgba(255,255,255,1); line-height: 1.8;
+      text-shadow: 0 1px 14px rgba(0,0,0,0.55);
     }
 
     /* ── FADE-UP REVEAL ── */
