@@ -1,0 +1,26 @@
+# Files in the repo root that should NOT be served as part of the site.
+# Uses .gitignore-style patterns, relative to the assets directory.
+
+# Tooling / config
+.git
+.claude
+.gitignore
+.assetsignore
+wrangler.jsonc
+node_modules
+.wrangler
+.dev.vars*
+.env*
+
+# OS cruft
+.DS_Store
+**/.DS_Store
+
+# Work-in-progress mockups — not part of the public site
+mockup.html
+mockup2.html
+design-review.html
+
+# Renders not referenced by index.html (only used by the mockups above)
+assets/render_3_bed.png
+assets/render_4_bed.png
